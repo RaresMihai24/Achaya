@@ -1,0 +1,408 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-image: url('background.jpg');
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-position: center; /* Centers the image */
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    background-repeat: no-repeat; /* Ensures the image doesn’t repeat */
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.dragon-card {
+    display: flex;
+    flex-direction: column; /* Stack the image and stats vertically */
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    width: 500px;
+}
+
+.dragon-image {
+    width: 625px;
+    height: 359px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+}
+
+.dragon-info {
+    flex: 1;
+    text-align: center; /* Center the text */
+}
+.stat-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    width: 70px; /* fixed width so all bars start aligned */
+    text-align: right;
+    margin-right: 10px;
+}
+
+.stat-label label {
+    font-weight: bold;
+}
+
+.stat-percentage {
+    margin-left: 15px; /* Increase the margin to add space between the bar and the percentage text */
+    font-weight: bold;
+    color: #333;
+}
+
+.bar-container {
+    display: flex;
+    align-items: center;
+    flex: 3; /* Make the bar container take up more space */
+    position: relative;
+}
+
+.bar {
+    background-color: #eee;
+    border-radius: 6px;
+    overflow: hidden;
+    height: 8px;
+    width: 300px;
+    position: relative;
+}
+
+.bar-fill {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.bar-mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background-color: #eee;
+    z-index: 2;
+    transition: width 0.3s ease;
+}
+
+
+
+.stat-percentage {
+    font-size: 14px;
+    margin-top: 4px;
+    text-align: right;
+    color: #333;
+}
+
+.energy-fill {
+    background: linear-gradient(to right, #00ffcc, #ffff99, #ff3300);
+}
+.moral-fill {
+    background: linear-gradient(to right, #4db8ff, #ffd700, #ff4d4d);
+}
+.health-fill {
+    background: linear-gradient(to right, #66ff66, #ffff66, #ff3333);
+}
+
+/* Action Panel */
+.action-panel {
+    background-color: #ffffff; /* White background for the container */
+    border: 2px solid #5a3d79; /* Dark purple border for mystical look */
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Deeper shadow for depth */
+    position: absolute; /* Absolute positioning */
+    top: 20px; /* Adjust spacing from the top */
+    left: 20px; /* Adjust spacing from the left */
+    z-index: 10; /* Ensure it stays on top of other elements */
+    color: #333; /* Dark text for good readability */
+    border-radius: 0; /* No rounded corners */
+}
+
+/* Header inside the action panel */
+.action-panel h3 {
+    text-align: center;
+    font-size: 25px; /* Slightly bigger font for a more prominent title */
+    margin-bottom: 15px;
+    color: #d91f1f; /* A more intense, fiery red */
+    font-family: 'Fantasy', sans-serif; /* Mystical font */
+
+}
+
+/* Button Style */
+.action-buttons form {
+    margin-bottom: 10px;
+}
+
+.action-buttons button {
+    width: 100%;
+    padding: 12px;
+    background-color: #b0b0b0; /* Gray buttons for a neutral tone */
+    color: white;
+    border: 2px solid #8a8a8a; /* Darker gray border */
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+/* Hover effect for buttons */
+.action-buttons button:hover {
+    background-color: #8e8e8e; /* Darker gray on hover */
+    transform: scale(1.05); /* Slight zoom effect for interaction */
+}
+
+/* Focus effect for buttons */
+.action-buttons button:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 99, 71, 0.8); /* Fiery glow when focused */
+}
+
+.statistics {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+	width: 520px;
+    position: relative;
+}
+
+.statistics h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-align: center;
+}
+
+
+.stat-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 80px; /* Fixed width for label and value, stars take the rest */
+    align-items: center;
+    margin: 0px 0;
+}
+
+.stat-row label {
+    text-align: left;
+}
+
+.stars {
+    text-align: left;
+    font-size: 1.4em;
+    white-space: nowrap;
+	font-weight: bold;
+	color: #e0e0e0
+}
+
+.stars .blue {
+    color: red; /* Blue color for full 100-point stars */
+	font-weight: bold;
+}
+
+.stars .green {
+    color: lightgreen; /* Green color for full green stars */
+}
+
+.stars .half-green {
+    color: green; /* Half green stars for the remaining points */
+    background: linear-gradient(to right, green 50%, #e0e0e0 50%); /* A half-green background to simulate half a star */
+}
+
+
+.stat-value {
+    text-align: right;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.total-stat-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px; /* space between label and value */
+    position: absolute;
+    top: 30px;
+    right: 5px;
+    font-weight: bold;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tab {
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: #ddd;
+}
+
+.tab-content {
+    display: none;
+    margin-top: 20px;
+}
+
+.tab-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tab-content li {
+    margin: 5px 0;
+}
+
+.tabs-container{
+    display: flex;
+    flex-direction: column; /* Stack the image and stats vertically */
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    width: 500px;
+}
+
+.characteristics-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 180px; /* Space between columns */
+	font-size: 14px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column p {
+    margin: 5px 0;
+}
+
+.tabs-container {
+    margin-top: 20px;
+}
+
+/* Style for the tabs buttons */
+.tabs {
+    display: flex;
+    justify-content: center; /* Centers the buttons horizontally */
+    gap: 20px; /* Space between the buttons */
+    margin-bottom: 40px;
+    border-bottom: 2px solid #ccc; /* Horizontal line below the buttons */
+    padding-bottom: 10px; /* Adds some space between the buttons and the line */
+}
+
+/* Individual tab button style */
+.tab {
+    padding: 10px 20px;
+    background-color: #007BFF; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Hover and active states for the tab buttons */
+.tab:hover {
+    background-color: #0056b3; /* Darker blue when hovered */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Active tab styling */
+.tab.active {
+    background-color: #28a745; /* Green background for the active tab */
+}
+
+/* Style for the tab content */
+.tab-content {
+    display: none;
+}
+
+/* Styling for tab content that is visible */
+.tab-content:target {
+    display: block;
+}
+
+.genetic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 180px; /* Space between columns */
+	font-size: 14px;
+}
+.genetic-stat {
+    background-color: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    font-size: 15px;
+}
+
+.blup-container {
+    margin-top: 20px;
+    padding-top: 15px;
+}
+
+.blup-meter-wrapper {
+    position: relative;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 400px;
+}
+
+.blup-meter-track {
+    position: relative;
+    height: 10px;
+    background: linear-gradient(to right, #d9534f, #f0ad4e 50%, #5cb85c);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.blup-meter-fill {
+    position: absolute;
+    top: -5px;
+    width: 10px;
+    height: 20px;
+    background-color: #000;
+    border-radius: 2px;
+    transition: left 0.3s ease-in-out;
+}
+
+.blup-meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #666;
+    padding-top: 5px;
+}
+
+.origin-container {
+    margin-top: 25px;
+    padding-top: 15px;
+    font-size: 14px;
+}
+
+.origin-container a {
+    color: #337ab7;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.origin-container a:hover {
+    color: #23527c;
+    text-decoration: underline;
+}
+
