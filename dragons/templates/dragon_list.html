@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="dragon-list-container">
+    <h1>Your Dragons</h1>
+
+    {% if dragons %}
+      <div class="dragon-grid">
+        {% for dragon in dragons %}
+          <div class="dragon-card">
+            <!-- Replace with per‑dragon image if available -->
+            <img src="{% static 'images/dragon-placeholder.jpg' %}" 
+                 alt="{{ dragon.name }}" 
+                 class="dragon-card-img">
+            <h3 class="dragon-card-name">{{ dragon.name }}</h3>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>You don’t own any dragons yet!</p>
+    {% endif %}
+  </div>
+{% endblock %}
+
+<p>Got {{ dragons|length }} dragons.</p>

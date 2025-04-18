@@ -1,0 +1,36 @@
+{# templates/auth.html #}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Dragon Index</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-box">
+      <h2>Register</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ reg_form.non_field_errors }}
+        {{ reg_form.name.label_tag }} {{ reg_form.name }}<br>
+        {{ reg_form.mail.label_tag }} {{ reg_form.mail }}<br>
+        {{ reg_form.password1.label_tag }} {{ reg_form.password1 }}<br>
+        {{ reg_form.password2.label_tag }} {{ reg_form.password2 }}<br>
+        <button type="submit" name="reg-submit">Create Account</button>
+      </form>
+    </div>
+    <div class="auth-box">
+      <h2>Login</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ login_form.non_field_errors }}
+        {{ login_form.mail.label_tag }} {{ login_form.mail }}<br>
+        {{ login_form.password.label_tag }} {{ login_form.password }}<br>
+        <button type="submit" name="log-submit">Log In</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from django.db import models
+from django.conf import settings
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,8 +27,8 @@ SECRET_KEY = 'django-insecure-tyuo4%$r-r5h98_1gh$ue8ms1!*o2*gv+ufu=t*@35py+b)19r
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
+AUTH_USER_MODEL = 'dragons.Player'
+LOGIN_URL = '/auth/'
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,7 +81,7 @@ DATABASES = {
         'NAME': 'dragon_db',
         'USER': 'dragon_user',
         'PASSWORD': 'dragon_pass',
-        'HOST': 'db',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
