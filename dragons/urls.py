@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -11,9 +13,8 @@ urlpatterns = [
     path('auth/', views.auth_view, name='auth'),
 	path('logout/', views.logout_view, name='logout'),
 	path('dragons/', views.dragon_list, name='dragon_list'),
-	path('accounts/login/', views.auth_view, name='login'),
     # Define additional action endpoints as needed:
     # path('water/', views.water_dragon, name='water_dragon'),
     # path('play/', views.play_dragon, name='play_dragon'),
     # ... etc.
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

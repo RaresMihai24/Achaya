@@ -15,7 +15,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -76,14 +77,14 @@ WSGI_APPLICATION = 'dragon_project.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dragon_db',
-        'USER': 'dragon_user',
-        'PASSWORD': 'dragon_pass',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
+  'default': {
+    'ENGINE':   'django.db.backends.mysql',
+    'NAME':     'dragon_db',
+    'USER':     'dragon_user',
+    'PASSWORD': 'dragon_pass',
+    'HOST':     'db',           # <-- point to the Docker service name
+    'PORT':     '3306',
+  }
 }
 
 # Password validation

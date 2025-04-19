@@ -4,9 +4,27 @@ from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin, BaseUserManager
 )
 
+class Race(models.Model):
+    name       = models.CharField(max_length=50, unique=True)
+    base_res   = models.FloatField(default=0)
+    base_vit   = models.FloatField(default=0)
+    base_dre   = models.FloatField(default=0)
+    base_gal   = models.FloatField(default=0)
+    base_sar   = models.FloatField(default=0)
+    base_tra   = models.FloatField(default=0)
+    image      = models.ImageField(
+        upload_to='race_images/',
+        blank=True,
+        null=True,
+        help_text="Upload a representative image for this race"
+    )
+
+    def __str__(self):
+        return self.name
+
 class Dragon(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    race = models.CharField(max_length=100)
+    race  = models.ForeignKey(Race, on_delete=models.PROTECT, related_name="dragons")
     specie = models.CharField(max_length=100)
     height = models.IntegerField()
     sex = models.CharField(max_length=10)
@@ -17,12 +35,12 @@ class Dragon(models.Model):
     moral = models.FloatField(default=100)
     health = models.FloatField(default=100)
     # Genetic stats
-    res = models.FloatField(default=0)
-    vit = models.FloatField(default=0)
-    dre = models.FloatField(default=0)
-    gal = models.FloatField(default=0)
-    sar = models.FloatField(default=0)
-    tra = models.FloatField(default=0)
+    res   = models.FloatField()
+    vit   = models.FloatField()
+    dre   = models.FloatField()
+    gal   = models.FloatField()
+    sar   = models.FloatField()
+    tra   = models.FloatField()
     # Calculated ability stats
     ac_res = models.FloatField(default=0)
     ac_vit = models.FloatField(default=0)
@@ -30,6 +48,7 @@ class Dragon(models.Model):
     ac_gal = models.FloatField(default=0)
     ac_sar = models.FloatField(default=0)
     ac_tra = models.FloatField(default=0)
+
     GP = models.FloatField(default=0)
     BLUP = models.FloatField(default=0)
     mother = models.CharField(max_length=100, blank=True, null=True)
@@ -43,6 +62,17 @@ class Dragon(models.Model):
         on_delete=models.SET_NULL,
         related_name='dragons',
     )
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # only on first creation
+            self.res = self.race.base_res
+            self.vit = self.race.base_vit
+            self.dre = self.race.base_dre
+            self.gal = self.race.base_gal
+            self.sar = self.race.base_sar
+            self.tra = self.race.base_tra
+        super().save(*args, **kwargs)
+
     class Meta:
         db_table = "dragons"  # Use your existing table name
 
@@ -86,3 +116,4 @@ class Player(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.mail
+		

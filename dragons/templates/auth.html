@@ -11,7 +11,7 @@
   <div class="auth-container">
     <div class="auth-box">
       <h2>Register</h2>
-      <form method="post">
+      <form method="post" action="{% url 'auth' %}">
         {% csrf_token %}
         {{ reg_form.non_field_errors }}
         {{ reg_form.name.label_tag }} {{ reg_form.name }}<br>
@@ -21,9 +21,14 @@
         <button type="submit" name="reg-submit">Create Account</button>
       </form>
     </div>
+
     <div class="auth-box">
       <h2>Login</h2>
-      <form method="post">
+      {# We tack on ?next=... so that after login you go back to where you came from #}
+      <form 
+        method="post" 
+        action="{% url 'auth' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}"
+      >
         {% csrf_token %}
         {{ login_form.non_field_errors }}
         {{ login_form.mail.label_tag }} {{ login_form.mail }}<br>

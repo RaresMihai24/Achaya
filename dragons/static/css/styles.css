@@ -718,25 +718,33 @@ h2 {
   padding: 20px;
 }
 .dragon-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
 }
-.dragon-card {
+
+.dragon-card-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;           /* card width */
   background: white;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 180px;
-  text-align: center;
-  padding: 10px;
+  overflow: hidden;       /* crops anything outside */
+  text-decoration: none;  /* remove link underline */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.dragon-card-img {
+
+.dragon-card-list img.dragon-model {
   width: 100%;
-  height: auto;
-  border-radius: 4px;
+  height: 120px;          /* card image height */
+  object-fit: contain;    /* or ‘cover’ if you want to fill & crop */
+  display: block;         /* remove inline whitespace */
 }
+
 .dragon-card-name {
-  margin: 10px 0 0;
-  font-size: 1.1em;
+  padding: 8px 0;
+  color: #333;
+  text-align: center;
+  font-size: 1rem;
 }

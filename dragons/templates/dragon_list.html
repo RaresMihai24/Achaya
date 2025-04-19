@@ -8,19 +8,19 @@
     {% if dragons %}
       <div class="dragon-grid">
         {% for dragon in dragons %}
-          <div class="dragon-card">
-            <!-- Replace with per‑dragon image if available -->
-            <img src="{% static 'images/dragon-placeholder.jpg' %}" 
-                 alt="{{ dragon.name }}" 
-                 class="dragon-card-img">
+          <a href="{% url 'view_dragon' dragon.name %}" class="dragon-card-list">
+            <img
+              src="{{ dragon.race.image.url }}"
+              alt="{{ dragon.race.name }}"
+              class="dragon-model"
+            >
             <h3 class="dragon-card-name">{{ dragon.name }}</h3>
-          </div>
+          </a>
         {% endfor %}
       </div>
     {% else %}
       <p>You don’t own any dragons yet!</p>
     {% endif %}
+    <p>Got {{ dragons|length }} dragons.</p>
   </div>
 {% endblock %}
-
-<p>Got {{ dragons|length }} dragons.</p>
