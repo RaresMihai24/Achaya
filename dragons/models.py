@@ -12,12 +12,8 @@ class Race(models.Model):
     base_gal   = models.FloatField(default=0)
     base_sar   = models.FloatField(default=0)
     base_tra   = models.FloatField(default=0)
-    image      = models.ImageField(
-        upload_to='race_images/',
-        blank=True,
-        null=True,
-        help_text="Upload a representative image for this race"
-    )
+    image_male   = models.ImageField(upload_to='races/male/', null=True, blank=True)
+    image_female = models.ImageField(upload_to='races/female/', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -105,7 +101,9 @@ class Player(AbstractBaseUser, PermissionsMixin):
     # … any other fields you need …
     is_active = models.BooleanField(default=True)
     is_staff  = models.BooleanField(default=False)
-
+    gold     = models.IntegerField(default=50)
+    silver   = models.IntegerField(default=5000)
+    diamonds = models.IntegerField(default=5)
     USERNAME_FIELD  = 'mail'
     REQUIRED_FIELDS = ['name']
 

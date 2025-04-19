@@ -4,9 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from datetime import datetime
-
+import re
 from .models import Dragon
 from .forms import RegistrationForm, LoginForm
+from .utils import change_currency
 
 @login_required(login_url='auth')
 def index(request):
@@ -228,7 +229,7 @@ def view_dragon(request, name):
     excellence_stars = sum((v - 100)//10 + 1 for v in traits.values() if v >= 100)
 
     # Action buttons
-    actions = ['feed','water','play','groom','treat','sleep']
+    actions = ['feed','water','play','groom','treat','sleep', 'age']
 
     # Build context, **including** your missing basic fields:
     context = {
@@ -310,6 +311,33 @@ def action_dragon(request, action):
         elif action == 'sleep':
             dragon.sleep = True
             messages.success(request, f"{dragon.name} is now sleeping.")
+        elif action == 'age':
+            # parse current age string into total months
+            age_str = dragon.age or "a few hours"
+            if age_str == "a few hours":
+                total_months = 0
+            else:
+                years = int(re.search(r'(\d+)\s*year', age_str).group(1)) if 'year' in age_str else 0
+                months = int(re.search(r'(\d+)\s*month', age_str).group(1)) if 'month' in age_str else 0
+                total_months = years * 12 + months
+
+            # add 2 months
+            total_months += 2
+
+            # re‑format back to string
+            if total_months == 0:
+                new_age = "a few hours"
+            else:
+                y, m = divmod(total_months, 12)
+                parts = []
+                if y:
+                    parts.append(f"{y} year{'s' if y>1 else ''}")
+                if m:
+                    parts.append(f"{m} month{'s' if m>1 else ''}")
+                new_age = " ".join(parts)
+
+            dragon.age = new_age
+            messages.success(request, f"{dragon.name} is now {dragon.age}.")
         else:
             messages.error(request, "Unknown action.")
 
@@ -363,3 +391,10 @@ def my_dragons_list(request):
         return redirect('auth')
     dragons = Dragon.objects.filter(owner=user)
     return render(request, 'my_dragons.html', { 'dragons': dragons })
+
+@login_required
+def buy_health_potion(request):
+    if change_currency(request.user, gold_delta=-5, request=request):
+        # grant potion…
+        messages.success(request, "You bought a health potion for 5 gold!")
+    return redirect('index')

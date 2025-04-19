@@ -1,12 +1,25 @@
 # in app/forms.py
 from django import forms
-from .models import Player
+from .models import Player, Race, Dragon
 from django.contrib.auth.hashers import make_password, check_password
+from datetime import date
+from django.forms.widgets import RadioSelect
 
 class RegistrationForm(forms.ModelForm):
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput)
+    starter_race = forms.ModelChoiceField(
+        queryset=Race.objects.all(),
+        widget=RadioSelect,           # <-- render as radio inputs
+        empty_label=None,
+        label="Choose your dragon’s race"
+    )
 
+    starter_sex = forms.ChoiceField(
+        choices=[('Male','Male'),('Female','Female')],
+        widget=RadioSelect,           # <-- render as radio inputs
+        label="Choose your dragon’s sex"
+    )
     class Meta:
         model = Player
         fields = ['name', 'mail']
@@ -23,6 +36,26 @@ class RegistrationForm(forms.ModelForm):
         user.pwd = make_password(self.cleaned_data['password1'])
         if commit:
             user.save()
+
+
+            # now create their starter dragon
+            race = self.cleaned_data['starter_race']
+            sex  = self.cleaned_data['starter_sex']
+            Dragon.objects.create(
+                name      = f"{user.name}'s {race.name}",
+                race      = race,
+                specie    = "dragon",
+                height    = 10,
+                sex       = sex,
+                age       = "a few hours",
+                weight    = 5.0,
+                born_on   = date.today(),
+                owner     = user,
+				GP        = 350,
+				BLUP      = -100,
+				bred_by   = user,
+            )
+
         return user
 
 class LoginForm(forms.Form):

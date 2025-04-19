@@ -26,7 +26,16 @@ SECRET_KEY = 'django-insecure-tyuo4%$r-r5h98_1gh$ue8ms1!*o2*gv+ufu=t*@35py+b)19r
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+USE_I18N = True
+USE_L10N = True
 
+# if you specifically want dots for thousands:
+USE_THOUSAND_SEPARATOR = True
+THOUSAND_SEPARATOR     = '.'
+NUMBER_GROUPING        = 3
+
+# you can also pick a locale that by default uses dot‐grouping, e.g. German
+LANGUAGE_CODE = 'en-us'
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'dragons.Player'
 LOGIN_URL = '/auth/'
@@ -39,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'dragons'
+	'dragons',
+	'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+				'dragons.context_processors.player_currencies',
             ],
         },
     },

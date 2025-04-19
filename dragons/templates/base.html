@@ -1,5 +1,6 @@
 {% load static %}
 {% load dict_extras %}
+{% load static l10n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,18 +12,23 @@
 <body>
 <div class="navbar">
     <div class="nav-left">
-<div class="resource">
-    <img src="{% static 'images/resources/gold_nugget.png' %}" class="resource-icon-gold" alt="Gold">
-    <span class="gold">120</span>
-</div>
-<div class="resource">
-    <img src="{% static 'images/resources/silver_ore.png' %}" class="resource-icon" alt="Silver">
-    <span class="silver">300</span>
-</div>
-<div class="resource">
-    <img src="{% static 'images/resources/diamond.png' %}" class="resource-icon" alt="Diamond">
-    <span class="diamond">12</span>
-</div>
+  {% localize on %}
+    <div class="resource">
+      <img src="{% static 'images/resources/gold_nugget.png' %}"
+           class="resource-icon-gold" alt="Gold">
+      <span class="gold">{{ gold_balance }}</span>
+    </div>
+    <div class="resource">
+      <img src="{% static 'images/resources/silver_ore.png' %}"
+           class="resource-icon" alt="Silver">
+      <span class="silver">{{ silver_balance }}</span>
+    </div>
+    <div class="resource">
+      <img src="{% static 'images/resources/diamond.png' %}"
+           class="resource-icon" alt="Diamond">
+      <span class="diamond">{{ diamond_balance }}</span>
+    </div>
+  {% endlocalize %}
     </div>
     <div class="nav-center">
         <img src="{% static 'logo.png' %}" alt="Game Logo" class="nav-logo">

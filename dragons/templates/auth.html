@@ -18,6 +18,30 @@
         {{ reg_form.mail.label_tag }} {{ reg_form.mail }}<br>
         {{ reg_form.password1.label_tag }} {{ reg_form.password1 }}<br>
         {{ reg_form.password2.label_tag }} {{ reg_form.password2 }}<br>
+        <fieldset class="starter-race">
+          <legend>{{ reg_form.starter_race.label }}</legend>
+          {% for widget in reg_form.starter_race %}
+            <label class="race-option">
+              {{ widget.tag }}
+              {# assume you’ve placed race portrait as race.name|lower .jpg #}
+              <img src="{% static 'images/races/'|add:widget.choice_label|lower|add:'.jpg' %}"
+                   alt="{{ widget.choice_label }}">
+              <span>{{ widget.choice_label }}</span>
+            </label>
+          {% endfor %}
+        </fieldset>
+
+        <fieldset class="starter-sex">
+          <legend>{{ reg_form.starter_sex.label }}</legend>
+          {% for widget in reg_form.starter_sex %}
+            <label class="sex-option">
+              {{ widget.tag }}
+              {# male.png / female.png in static/images/icons/ #}
+              <img src="{% static 'images/icons/'|add:widget.choice_label|lower|add:'.png' %}"
+                   alt="{{ widget.choice_label }}">
+            </label>
+          {% endfor %}
+        </fieldset>
         <button type="submit" name="reg-submit">Create Account</button>
       </form>
     </div>

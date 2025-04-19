@@ -9,11 +9,15 @@
       <div class="dragon-grid">
         {% for dragon in dragons %}
           <a href="{% url 'view_dragon' dragon.name %}" class="dragon-card-list">
-            <img
-              src="{{ dragon.race.image.url }}"
-              alt="{{ dragon.race.name }}"
-              class="dragon-model"
-            >
+     <img
+        src="{% if dragon.sex == 'Male' %}
+                {{ dragon.race.image_male.url }}
+              {% else %}
+                {{ dragon.race.image_female.url }}
+              {% endif %}"
+        alt="{{ dragon.name }}"
+        class="dragon-model"
+      >
             <h3 class="dragon-card-name">{{ dragon.name }}</h3>
           </a>
         {% endfor %}

@@ -32,9 +32,13 @@
           class="rename-input"
         >
       </form>
-      <img
-        src="{% static 'images/dragon-placeholder.jpg' %}"
-        alt="Dragon"
+     <img
+        src="{% if selected_dragon.sex == 'Male' %}
+                {{ selected_dragon.race.image_male.url }}
+              {% else %}
+                {{ selected_dragon.race.image_female.url }}
+              {% endif %}"
+        alt="{{ selected_dragon.name }}"
         class="dragon-model"
       >
     </div>
